@@ -26,6 +26,7 @@
             feedbackButton: '.feedback-btn',
             showDescriptionModal: true,
             isDraggable: true,
+            capturedElement: document, //a selector
             onScreenshotTaken: function() {},
             tpl: {
                 description: '<div id="feedback-welcome"><div class="feedback-logo">Feedback</div><p>Feedback lets you send us suggestions about our products. We welcome problem reports, feature ideas and general comments.</p><p>Start by writing a brief description:</p><textarea id="feedback-note-tmp"></textarea><p>Next we\'ll let you identify areas of the page related to your description.</p><button id="feedback-welcome-next" class="feedback-next-btn feedback-btn-gray">Next</button><div id="feedback-welcome-error">Please enter a description.</div><div class="feedback-wizard-close"></div></div>',
@@ -42,6 +43,7 @@
         var supportedBrowser = !!window.HTMLCanvasElement;
         var isFeedbackButtonNative = settings.feedbackButton == '.feedback-btn';
         var _html2canvas = settings.html2canvas || false;
+        var capturedElement = settings.capturedElement;
         if (supportedBrowser) {
             if (isFeedbackButtonNative) {
                 $('body').append('<button class="feedback-btn feedback-btn-gray">' + settings.initButtonText + '</button>');
@@ -57,8 +59,8 @@
                 }
                 var canDraw = false,
                     img = '',
-                    h = $(document).height(),
-                    w = $(document).width(),
+                    h = $(capturedElement).height(),
+                    w = $(capturedElement).width(),
                     tpl = '<div id="feedback-module">';
 
                 if (settings.initialBox) {
